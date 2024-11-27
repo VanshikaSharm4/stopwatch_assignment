@@ -1,0 +1,132 @@
+<!-- Build a Clock and fulfill the below User stories. 
+
+User Story 1: Create a div with the class container and center it on screen
+
+User Story 2: Give body background black colour and text colour white.
+
+User Story 3: Implement a label tag and show the time in this label tag.
+
+User Story 4: Implement two buttons named as Lap and Start.
+
+User Story 5: Start button starts the timer of the stopwatch.
+
+User Story 6: The lap button prepends a new list element with the current time at which the stopwatch was clicked.
+
+User Story 7: If stopwatch is running change the start button to stop button with a red background.
+
+User Story 8: If the user stops the time change the Lap button to reset which resets the stopwatch.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         body{
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+
+        }
+        .container{
+            margin-top: 0 auto;
+            display: flex;
+            align-items: center; 
+            font-size: 3rem;
+        }
+        button{
+            font-size: 3rem;
+            cursor: pointer;
+        }
+        .stop{
+            background-color: red;
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="time" id="time">00:00</label> <br> <br>
+
+        <button class="lap">Lap</button>
+        <button class="start">Start</button>
+        <button class="reset" style="display: none;">Reset</button>
+        <button class="stop" style="display: none;">Stop</button>
+       
+
+        <ul class="laps">
+
+        </ul>
+
+    </div>
+    
+</body>
+</html>
+
+<script>
+    let lap = document.querySelector(".lap")
+    let laps = document.querySelector(".lap")
+    let start = document.querySelector(".start");
+    let stop = document.querySelector(".stop");
+    let reset = document.querySelector(".reset");
+    let time = document.querySelector("#time");
+    let ul = document.querySelector(".laps");
+    let id;
+
+
+    start.addEventListener('click', function(){
+    
+        let sec = 0;
+        let min = 0;
+
+        id = setInterval(function(){
+            sec++;
+            if(sec===60){
+                sec = 0;
+                min++;
+            }
+            
+        let newMin = min < 10 ? `0${min}` : min;
+        let newSec = sec < 10 ? `0${sec}` : sec;
+
+        time.innerText = `${newMin}:${newSec}`;
+            
+        },1000)
+       
+        start.style.display = 'none';
+        stop.style.display = 'block';
+
+
+        
+    })
+    
+    stop.addEventListener('click', function(){
+        clearInterval(id);
+            lap.style.display = 'none';
+            reset.style.display = 'block';
+            
+        })
+
+    lap.addEventListener('click', function(){
+            let li = document.createElement('li');
+            li.innerText = time.innerText;
+            ul.appendChild(li);
+
+        })
+
+    reset.addEventListener('click', function(){
+        time.innerText = `00:00`;
+        min = 0;
+        sec = 0;
+        stop.style.display = 'none'
+        start.style.display = 'block'
+
+    })
+       
+
+
+
+</script>
